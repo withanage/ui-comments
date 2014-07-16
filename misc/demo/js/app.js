@@ -86,7 +86,7 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
 
                         fedoraService.fetch(value + template).then(function(data) {
                             if (data != null) {
-                                var tuple = {'text': data['data']['dc_title']}
+                                var tuple = {'title': data['data']['dc_title'],'text':data['data']['dc_description']}
                                 $scope.comments.push(tuple);
                             }
                         })
