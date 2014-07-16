@@ -75,27 +75,43 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
             $rootScope.subreddit = false;
             $rootScope.article = false;
 
-
-            var url = 'http://pers31.ub.uni-heidelberg.de:8080/fedora/rest/de/uni-heidelberg/ub/digi/diglit/lehmann1756/0001/fcr:transform/annotation1';
+            $scope.comments = [];
+            var template = '/fcr:transform/annotation1';
+            var url = 'http://pers31.ub.uni-heidelberg.de:8080/fedora/rest/de/uni-heidelberg/ub/digi/diglit/lehmann1756/0001' + template;
             fedoraService.fetch(url).then(function(data) {
                 if (data != null) {
-                    $scope.comments = data['data'];
-                    
+
+                    angular.forEach(data['data']["fcrepo_hasChild"], function(value) {
+                        //$scope.comments.push('name' + ': ' + value);
+
+                        fedoraService.fetch(value + template).then(function(data) {
+                            if (data != null) {
+                                var tuple = {'text': data['data']['dc_title']}
+                                $scope.comments.push(tuple);
+                            }
+                        })
+
+
+                    });
+
+
+
                     /**
                      * 
                      sort_text = 'fcrepo_created';
-                    $scope.comments.sort(function(a, b) {
-                        if (a[sort_text] < b[sort_text])
-                            return 1;
-                        if (a[sort_text] > b[sort_text])
-                            return -1;
-                        return 0;
-                    })
-                    $scope.comments = $scope.comments.sort();
-                    */
+                     $scope.comments.sort(function(a, b) {
+                     if (a[sort_text] < b[sort_text])
+                     return 1;
+                     if (a[sort_text] > b[sort_text])
+                     return -1;
+                     return 0;
+                     })
+                     $scope.comments = $scope.comments.sort();
+                     */
                 }
 
             });
+            console.log($scope.comments);
 
             /**
              $scope.comments = [
