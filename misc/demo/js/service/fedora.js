@@ -1,6 +1,6 @@
 /* Dulip Withanage */
 
-function fedoraService($q, $http) {
+function fedoraService_old($q, $http) {
 
     var context = {
         "fcrepo": "http://fedora.info/definitions/v4/repository",
@@ -47,22 +47,19 @@ function fedoraService($q, $http) {
 }
 ;
 
-function fedoraService_orig($http) {
-    var jsonld_download = {
-        fetch: function(url) {
-            var data = function(url) {
-                return $http({
-                    method: 'get',
-                    url: url,
-                    headers: {"Accept": "application/ld+json"}
-                    //params: {q: query}
-                });
-            };
-            return {
-                data: data
-            }
-        }
-    }
-    return jsonld_download;
+
+
+function fedoraService($http) {
+    var fetch = function(url) {
+        return $http({
+            method: 'get',
+            url: url,
+            headers: {"Accept": "application/json"}
+        });
+    };
+
+    return {
+        fetch: fetch
+    };
 }
-;   
+
