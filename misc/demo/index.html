@@ -16,6 +16,9 @@ title="toggle children" ng-click="collapse()"></button>
 <span class="comment-username" ng-if="!comment.profileUrl">{{comment.name}}</span>
 <a class="comment-username" ng-if="comment.profileUrl" ng-href="{{comment.profileUrl}}"
 title="{{comment.name}}">{{comment.name}}</a>
+
+{{comment.title}}
+
 <small class="comment-date" ng-if="comment.date" title="{{comment.date | calendar}}">
 {{comment.date | timeago}}
 </small>
@@ -35,8 +38,11 @@ alt="{{comment.name}}" />
 </div>
 </script>
 </head>
+
 <body data-ng-controller="DemoCtrl">
 
+    
+    
 <div class="container-fluid">
 {{comments}}
 <div class="view-container">

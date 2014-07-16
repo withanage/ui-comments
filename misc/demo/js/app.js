@@ -77,25 +77,29 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
 
             $scope.comments = [];
             var template = '/fcr:transform/annotation1';
-            var url = 'http://pers31.ub.uni-heidelberg.de:8080/fedora/rest/de/uni-heidelberg/ub/digi/diglit/lehmann1756/0001' + template;
+            var url = 'http://pers31.ub.uni-heidelberg.de:8080/fedora/rest/de/uni-heidelberg/ub/digi/diglit/lehmann1756/0001';// + template;
             fedoraService.fetch(url).then(function(data) {
                 if (data != null) {
-
-                    angular.forEach(data['data']["fcrepo_hasChild"], function(value) {
+                    var annos = data['data'].splice(1, data['data'].length - 1);
+                    //console.log(annos);
+                    angular.forEach(annos, function(value) {
+                        console.log(value['http://purl.org/dc/elements/1.1/title']);
+                        var tuple = {'title': value['http://purl.org/dc/elements/1.1/title'][0]['@value'],
+                         'text':  value['http://purl.org/dc/elements/1.1/description'][0]['@value'],
+                          'date':  value['http://fedora.info/definitions/v4/repository#lastModifiedBy'][0]['@value'],
+                        }
+                        $scope.comments.push(tuple);
                         //$scope.comments.push('name' + ': ' + value);
 
-                        fedoraService.fetch(value + template).then(function(data) {
-                            if (data != null) {
-                                var tuple = {'title': data['data']['dc_title'],'text':data['data']['dc_description']}
-                                $scope.comments.push(tuple);
-                            }
-                        })
+                        //fedoraService.fetch(value + template).then(function(data) {
+                        //  if (data != null) {
+                        //  var tuple = {'title': data['data']['dc_title'], 'text': data['data']['dc_description'], 'date': data['data']['fcrepo_lastModified']}
+                        // $scope.comments.push(tuple);
+                        //}
+                        // })
 
 
                     });
-
-
-
                     /**
                      * 
                      sort_text = 'fcrepo_created';
@@ -145,7 +149,7 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
                 var parentComment = angular.extend(comment, {
                     name: '@' + comment.name,
                     date: new Date(),
-                    profileUrl: 'https://github.com/' + comment.name
+                    //profileUrl: 'https://github.com/' + comment.name
                 });
                 $scope.comments.push(parentComment);
             };
@@ -337,3 +341,5 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
                 return moment(date).calendar();
             };
         });
+
+
