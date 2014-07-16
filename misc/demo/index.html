@@ -12,18 +12,18 @@
 ng-class="{'fa-minus-square': !collapsed, 'fa-plus-square': collapsed}"
 title="toggle children" ng-click="collapse()"></button>
 <button ng-if="!comment.children" class="fa-2x fa clear-square"></button>
+<h4>{{comment.title}}</h4>
 <h4 class="comment-user">
 <span class="comment-username" ng-if="!comment.profileUrl">{{comment.name}}</span>
 <a class="comment-username" ng-if="comment.profileUrl" ng-href="{{comment.profileUrl}}"
 title="{{comment.name}}">{{comment.name}}</a>
 
-{{comment.title}}
-
-
+<small class="comment-date" ng-if="comment.date" title="{{comment.date | calendar}}">
+{{comment.date.split('T')[0]}} {{comment.date.split('T')[1].split('.')[0]}}
+</small>
 </h4>
 <img class="comment-avatar" ng-if="comment.avatarUrl" ng-src="{{comment.avatarUrl}}"
 alt="{{comment.name}}" />
-<small class="comment-date" ng-if="comment.date" title="{{comment.date.split('T')[0]}} | calendar}}"></small>
 </div>
 <div class="comment-body panel-body" ng-bind-html="comment.text"></div>
 <div comments-transclude></div>

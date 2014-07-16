@@ -50,9 +50,11 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
 
             $scope.addChildComment = function(comment) {
                 var childComment = angular.extend(comment, {
-                    name: '@' + comment.name,
+                    //name: '@' + comment.name,
                     date: new Date(),
-                    profileUrl: 'https://github.com/' + comment.name
+                    title:comment.title,
+                    text:comment.text
+                    //profileUrl: 'https://github.com/' + comment.name
 
                 });
                 if (!$scope.comment.children) {
@@ -86,7 +88,7 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
                         console.log(value['http://purl.org/dc/elements/1.1/title']);
                         var tuple = {'title': value['http://purl.org/dc/elements/1.1/title'][0]['@value'],
                          'text':  value['http://purl.org/dc/elements/1.1/description'][0]['@value'],
-                          'date':  value['http://fedora.info/definitions/v4/repository#lastModifiedBy'][0]['@value'],
+                          'date':  value['http://fedora.info/definitions/v4/repository#lastModified'][0]['@value'],
                         }
                         $scope.comments.push(tuple);
                         //$scope.comments.push('name' + ': ' + value);

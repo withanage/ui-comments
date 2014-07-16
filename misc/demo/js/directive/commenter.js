@@ -1,6 +1,4 @@
-/**
- * Created by Ariel Mashraki
- */
+
 
 function commenterDirective($timeout, githubService) {
   return {
