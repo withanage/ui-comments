@@ -57,7 +57,7 @@ function fedoraService($http) {
             headers: {"Accept": "application/json"}
         });
     };
-
+    console.log('xhr called ' + url);
     return {
         fetch: fetch
     };
