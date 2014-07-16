@@ -19,12 +19,11 @@ title="{{comment.name}}">{{comment.name}}</a>
 
 {{comment.title}}
 
-<small class="comment-date" ng-if="comment.date" title="{{comment.date | calendar}}">
-{{comment.date | timeago}}
-</small>
+
 </h4>
 <img class="comment-avatar" ng-if="comment.avatarUrl" ng-src="{{comment.avatarUrl}}"
 alt="{{comment.name}}" />
+<small class="comment-date" ng-if="comment.date" title="{{comment.date.split('T')[0]}} | calendar}}"></small>
 </div>
 <div class="comment-body panel-body" ng-bind-html="comment.text"></div>
 <div comments-transclude></div>
