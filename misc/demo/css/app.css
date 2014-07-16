@@ -109,7 +109,7 @@ a>.text {
   height: 92px;
 }
 
-.subreddits: {
+.subreddits{
   display: table;
 }
 .subreddits:hover {
