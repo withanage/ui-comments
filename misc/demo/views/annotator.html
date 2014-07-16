@@ -3,14 +3,14 @@
     <div class="form-group">
       <!--input ng-model="child.name" class="form-control" placeholder="github username"
              ng-keydown="selected=false" type="text" required /-->
-      <input ng-model="child.title" class="form-control" placeholder="title">
+      <input ng-model="child.title" class="form-control" placeholder="Titel">
       <typeahead class="typeahead" model="items" prompt="Start typing a US state" />
     </div>
     <div class="form-group">
-      <textarea ng-model="child.text" value="annotation" class="form-control" rows="1"
+      <textarea ng-model="child.text" value="annotation" class="form-control" rows="1" placeholder="Annotation"
                 ng-minlength="5" required></textarea>
     </div>
-    <button ng-disabled="form.$invalid" type="submit" class="btn btn-primary">Submit</button>
+    <button ng-disabled="form.$invalid" type="submit" class="btn btn-primary">Einfügen</button>
   </form>
   <span class="label pull-right pointer" ng-click="toggle()"
         ng-class="{'label-success': toggled, 'label-warning': !toggled}">{{ btnText }}</span>

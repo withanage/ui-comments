@@ -66,7 +66,7 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
 
         .config(function($routeProvider) {
             $routeProvider.when('/', {
-                templateUrl: 'views/demo.html',
+                templateUrl: 'views/annotations.html',
                 controller: 'DemoCtrl'
             });
         })

@@ -3,15 +3,15 @@
 function commenterDirective($timeout, githubService) {
   return {
     restrict:'E',
-    templateUrl: 'views/commenter.html',
+    templateUrl: 'views/annotator.html',
     link: function(scope, elm, attr) {
       var action, timeout;
       scope.toggled = scope.$eval(attr.toggle) || false;
-      scope.btnText = 'add comment';
+      scope.btnText = 'Annotation';
 
       scope.toggle = function() {
         scope.toggled = !scope.toggled;
-        scope.btnText = (scope.toggled) ? 'add comment' : 'close';
+        scope.btnText = (scope.toggled) ? 'Annotation' : 'Abbrechen';
         scope.child = {};
       };
 
