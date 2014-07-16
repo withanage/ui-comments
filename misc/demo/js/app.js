@@ -79,7 +79,7 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
             var url = 'http://pers31.ub.uni-heidelberg.de:8080/fedora/rest/de/uni-heidelberg/ub/digi/diglit/lehmann1756/0001/fcr:transform/annotation1';
             fedoraService.fetch(url).then(function(data) {
                 if (data != null) {
-                    $scope.comments = data;
+                    $scope.comments = data['data'];
                     
                     /**
                      * 
