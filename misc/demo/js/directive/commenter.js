@@ -23,7 +23,7 @@ function commenterDirective($timeout, githubService) {
         action(val);
         scope.toggle();
       };
-
+/**
       scope.$watch('child.name', function(newUserName) {
         if(newUserName) {
           if(timeout) $timeout.cancel(timeout);
@@ -35,6 +35,7 @@ function commenterDirective($timeout, githubService) {
           }, 300)
         }
       });
+      **/
     }
   };
 }

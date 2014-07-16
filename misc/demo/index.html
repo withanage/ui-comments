@@ -5,36 +5,42 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link rel="stylesheet" href="css/app.css">
-<script type="text/ng-template" id="views/comment.html">
-<div class="panel panel-default comment">
-<div class="panel-heading comment-header">
-<button ng-if="comment.children" class="fa-2x clear-square fa"
-ng-class="{'fa-minus-square': !collapsed, 'fa-plus-square': collapsed}"
-title="toggle children" ng-click="collapse()"></button>
-<button ng-if="!comment.children" class="fa-2x fa clear-square"></button>
-<h4>{{comment.title}}</h4>
-<h4 class="comment-user">
-<span class="comment-username" ng-if="!comment.profileUrl">{{comment.name}}</span>
-<a class="comment-username" ng-if="comment.profileUrl" ng-href="{{comment.profileUrl}}"
-title="{{comment.name}}">{{comment.name}}</a>
 
-<small class="comment-date" ng-if="comment.date" title="{{comment.date | calendar}}">
-{{comment.date.split('T')[0]}} {{comment.date.split('T')[1].split('.')[0]}}
-</small>
-</h4>
-<img class="comment-avatar" ng-if="comment.avatarUrl" ng-src="{{comment.avatarUrl}}"
-alt="{{comment.name}}" />
-</div>
-<div class="comment-body panel-body" ng-bind-html="comment.text"></div>
-<div comments-transclude></div>
-<commenter action="addChildComment" toggle="true"></commenter>
-</div>
+
+
+
+  
+<script type="text/ng-template" id="views/comment.html">
+
+  <div class="panel panel-default comment" >
+    <div class="panel-heading">
+      <h4 class="panel-title">
+         <button ng-if="comment.children" class="fa-2x clear-square fa"
+        ng-class="{'fa-minus-square': !collapsed, 'fa-plus-square': collapsed}"
+        title="toggle children" ng-click="collapse()"></button>
+        <button ng-if="!comment.children" class="fa-2x fa clear-square"></button>
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+        {{comment.title}}
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+        <div class="panel-body">{{comment.text}}</div>
+         </div>
+  <commenter action="addChildComment" toggle="true"></commenter>
+    </div>
+
+
 </script>
 
 <script type="text/ng-template" id="views/comments.html">
-<div class="comments">
+<div class="panel-group" id="accordion">
 <comment ng-repeat="comment in comments" comment-data="comment"></comment>
+ 
+    
 </div>
+
+
 </script>
 </head>
 
@@ -43,11 +49,11 @@ alt="{{comment.name}}" />
     
     
 <div class="container-fluid">
-{{comments}}
-<div class="view-container">
-<div class="slider" data-ng-view></div>
+
+
+<div data-ng-view></div>
 </div>
-</div>
+
 <script src="js/jquery.min.js"></script>
 <script src="js/angular.min.js"></script>
 <script src="js/angular-animate.min.js"></script>
