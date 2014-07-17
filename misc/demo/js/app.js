@@ -47,14 +47,13 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
                 $scope.collapsed = children.hasClass('in');
                 children.collapse('toggle');
             };
-
             $scope.addChildComment = function(comment) {
                 var childComment = angular.extend(comment, {
                     //name: '@' + comment.name,
                     date: new Date(),
                     title: comment.title,
-                    text: comment.text
-                            //profileUrl: 'https://github.com/' + comment.name
+                    text: comment.text,
+                    'profileUrl': 'http://dummyimage.com/80x40&text=annonymous'
 
                 });
                 if (!$scope.comment.children) {
@@ -76,30 +75,38 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
             $rootScope.reddit = false;
             $rootScope.subreddit = false;
             $rootScope.article = false;
-
-            $scope.comments = [];
-            var template = '/fcr:transform/annotation1';
-            var url = 'http://pers31.ub.uni-heidelberg.de:8080/fedora/rest/de/uni-heidelberg/ub/digi/diglit/lehmann1756/0001';// + template;
-            fedoraService.fetch(url).then(function(data) {
-                if (data != null) {
-                    var annos = data['data'].splice(1, data['data'].length - 1);
-                    console.log(annos);
-                    angular.forEach(annos, function(value) {
-                        console.log(value['http://purl.org/dc/elements/1.1/title']);
-                        var tuple = {'title': value['http://purl.org/dc/elements/1.1/title'][0]['@value'],
-                            'text': value['http://purl.org/dc/elements/1.1/description'][0]['@value'],
-                            'date': value['http://fedora.info/definitions/v4/repository#lastModified'][0]['@value'],
-                            'name': value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value'],
-                            'profileUrl': 'http://dummyimage.com/80x40&text=' + value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value']
-
-                        }
-                        $scope.comments.push(tuple);
-                    });
-                }
-
-            });
-            console.log($scope.comments);
             
+            var template = '/fcr:transform/annotation1';
+            var url = 'http://pers31.ub.uni-heidelberg.de:8080/fedora/rest/de/uni-heidelberg/ub/digi/diglit/lehmann1756/0001/fcr:export';
+            var x2js = new X2JS();
+            fedoraService.fetch(url).then(function(data) {
+                
+                $scope.comments = JSON.stringify(x2js.xml_str2json(data.data));
+                console.log($scope.comments);
+            });
+            
+            /**
+             
+             fedoraService.fetch(url).then(function(data) {
+             if (data != null) {
+             var annos = data['data'].splice(1, data['data'].length - 1);
+             console.log(annos);
+             angular.forEach(annos, function(value) {
+             
+             var tuple = {'title': value['http://purl.org/dc/elements/1.1/title'][0]['@value'],
+             'text': value['http://purl.org/dc/elements/1.1/description'][0]['@value'],
+             'date': value['http://fedora.info/definitions/v4/repository#lastModified'][0]['@value'],
+             'name': value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value'],
+             'profileUrl': 'http://dummyimage.com/80x40&text=' + value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value']
+             
+             }
+             $scope.comments.push(tuple);
+             });
+             }
+             
+             });
+             **/
+
             //$scope.comments.push('name' + ': ' + value);
 
             //fedoraService.fetch(value + template).then(function(data) {
@@ -248,12 +255,10 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
             var articles = subreddit && subreddit.data && subreddit.data.children && subreddit.data.children,
                     badthumbs = /^(self|default|nsfw)$/i;
             $scope.articles = $.map(articles, mapArticles) || [];
-
             $rootScope.demo = false;
             $rootScope.reddit = false;
             $rootScope.subreddit = $scope.subreddit;
             $rootScope.article = false;
-
             function mapArticles(item) {
                 return {
                     domain: item.data.domain,
@@ -282,9 +287,7 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
                             about: $http.jsonp('http://api.reddit.com/r/' + $route.current.params.subreddit + '/about.json' +
                                     '?jsonp=JSON_CALLBACK', {cache: true})
                         };
-
                         return $q.all(promises).then(setup);
-
                         function setup(data) {
                             var comments = data.comments, about = data.about;
                             if (angular.isFunction(comments.headers)) {
@@ -298,7 +301,6 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
                                     angular.isObject(comments[1].data) && comments[1].data;
                             article = angular.isArray(article.children) && article.children.length && article.children[0];
                             article = article.data;
-
                             return {
                                 subreddit: about.data.display_name.replace(/^\/?r\//, ''),
                                 description: about.data.public_description || about.data.description || "",
@@ -309,7 +311,6 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
                                 thumbnail: (article.thumbnail !== "self" && article.thumbnail) || undefined,
                                 id: article.id
                             };
-
                             function mapComments(item) {
                                 if (!item.data || !item.data.author) {
                                     return undefined;

@@ -11,31 +11,31 @@
 
 
         <script type="text/ng-template" id="views/comment.html">
-  
-             <div class="panel panel-default comment">
-            <div class="panel-heading comment-header">
-                <h4 class="comment-user">
-                    <span class="comment-username" ng-if="!comment.profileUrl"> </span>
-                    <a class="comment-username" ng-if="comment.profileUrl" ng-href="{{comment.profileUrl}}"
-                       title="{{comment.name}}"> <img ng-src="{{comment.profileUrl}}"/></a>
 
-                </h4>
-                <button ng-if="comment.children" class="fa-2x clear-square fa"
-                        ng-class="{'fa-minus-square': !collapsed, 'fa-plus-square': collapsed}"
-                        title="toggle children" ng-click="collapse()"></button>
-                <button ng-if="!comment.children" class="fa-2x fa clear-square"></button>
-                <h4>{{comment.title}} </h4>
-    
-                    <small class="comment-date" ng-if="comment.date" title="{{comment.date| calendar}}">
-                        {{comment.date.split('T')[0]}} {{comment.date.split('T')[1].split('.')[0]}}
-                    </small>
-         
-           
+            <div class="panel panel-default comment">
+            <div class="panel-heading comment-header">
+            <h4 class="comment-user">
+            <span class="comment-username" ng-if="!comment.profileUrl"> </span>
+            <a class="comment-username" ng-if="comment.profileUrl" ng-href="{{comment.profileUrl}}"
+            title="{{comment.name}}"> <img ng-src="{{comment.profileUrl}}"/></a>
+
+            </h4>
+            <button ng-if="comment.children" class="fa-2x clear-square fa"
+            ng-class="{'fa-minus-square': !collapsed, 'fa-plus-square': collapsed}"
+            title="toggle children" ng-click="collapse()"></button>
+            <button ng-if="!comment.children" class="fa-2x fa clear-square"></button>
+            <h4>{{comment.title}} </h4>
+
+            <small class="comment-date" ng-if="comment.date" title="{{comment.date| calendar}}">
+            {{comment.date.split('T')[0]}} {{comment.date.split('T')[1].split('.')[0]}}
+            </small>
+
+
             </div>
             <div class="comment-body panel-body" ng-bind-html="comment.text"></div>
             <div comments-transclude></div>
             <commenter action="addChildComment" toggle="true"></commenter>
-        </div>
+            </div>
 
 
         </script>
@@ -53,7 +53,7 @@
 
     <body data-ng-controller="DemoCtrl">
 
-
+        {{comments}}
 
         <div class="container-fluid">
 
@@ -74,7 +74,8 @@
         </nav-->
 
         <script src="js/jquery.min.js"></script>
-        <script src="js/angular.min.js"></script>
+        <script src="https://x2js.googlecode.com/hg/xml2json.js" type="text/javascript"></script>
+        <script src = "js/angular.min.js" ></script>
         <script src="js/angular-animate.min.js"></script>
         <script src="js/angular-route.min.js"></script>
         <script src="js/angular-sanitize.min.js"></script>

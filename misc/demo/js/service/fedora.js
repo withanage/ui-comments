@@ -55,7 +55,7 @@ function fedoraService($http) {
             method: 'get',
             url: url,
             //headers: {"Accept": "application/json"}
-            headers: {"Accept": "application/ld+json"}
+            //headers: {"Accept": "application/ld+json"}
         });
         //console.log('xhr called ' + url);
     };
