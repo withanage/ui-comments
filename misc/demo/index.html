@@ -1,73 +1,92 @@
 <!DOCTYPE html>
 <html data-ng-app="commentsDemo">
-<head>
-<title>UI-Comments for AngularJS</title>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="css/app.css">
+    <head>
+        <title>UI-Comments for AngularJS</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/app.css">
 
 
 
 
+
+        <script type="text/ng-template" id="views/comment.html">
   
-<script type="text/ng-template" id="views/comment.html">
+             <div class="panel panel-default comment">
+            <div class="panel-heading comment-header">
+                <h4 class="comment-user">
+                    <span class="comment-username" ng-if="!comment.profileUrl"> </span>
+                    <a class="comment-username" ng-if="comment.profileUrl" ng-href="{{comment.profileUrl}}"
+                       title="{{comment.name}}"> <img ng-src="{{comment.profileUrl}}"/></a>
 
-  <div class="panel panel-default comment" >
-    <div class="panel-heading">
-      <h4 class="panel-title">
-         <button ng-if="comment.children" class="fa-2x clear-square fa"
-        ng-class="{'fa-minus-square': !collapsed, 'fa-plus-square': collapsed}"
-        title="toggle children" ng-click="collapse()"></button>
-        <button ng-if="!comment.children" class="fa-2x fa clear-square"></button>
-        <a data-toggle="collapse" data-parent="#accordion" href="?collapse=collapseOne">
-        {{comment.title}}
-        </a>
-      </h4>
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse in">
-        <div class="panel-body">{{comment.text}}</div>
-         </div>
-  <commenter action="addChildComment" toggle="true"></commenter>
-    </div>
-
-
-</script>
-
-<script type="text/ng-template" id="views/comments.html">
-<div class="panel-group" id="accordion">
-<comment ng-repeat="comment in comments" comment-data="comment"></comment>
- 
+                </h4>
+                <button ng-if="comment.children" class="fa-2x clear-square fa"
+                        ng-class="{'fa-minus-square': !collapsed, 'fa-plus-square': collapsed}"
+                        title="toggle children" ng-click="collapse()"></button>
+                <button ng-if="!comment.children" class="fa-2x fa clear-square"></button>
+                <h4>{{comment.title}} </h4>
     
-</div>
+                    <small class="comment-date" ng-if="comment.date" title="{{comment.date| calendar}}">
+                        {{comment.date.split('T')[0]}} {{comment.date.split('T')[1].split('.')[0]}}
+                    </small>
+         
+           
+            </div>
+            <div class="comment-body panel-body" ng-bind-html="comment.text"></div>
+            <div comments-transclude></div>
+            <commenter action="addChildComment" toggle="true"></commenter>
+        </div>
 
 
-</script>
-</head>
+        </script>
 
-<body data-ng-controller="DemoCtrl">
-
-    
-    
-<div class="container-fluid">
+        <script type="text/ng-template" id="views/comments.html">
+            <div class="panel-group" id="accordion">
+            <comment ng-repeat="comment in comments" comment-data="comment"></comment>
 
 
-<div data-ng-view></div>
-</div>
+            </div>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/angular.min.js"></script>
-<script src="js/angular-animate.min.js"></script>
-<script src="js/angular-route.min.js"></script>
-<script src="js/angular-sanitize.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/moment.min.js"></script>
-<script src="ui-comments-<%=pkg.version%>.js"></script>
-<script src="js/directive/typeahead.js"></script>
-<script src="js/directive/commenter.js"></script>
-<script src="js/service/github.js"></script>
-<script src="js/service/fedora.js"></script>
-<script src="js/app.js"></script>
 
-</script>
-</body>
+        </script>
+    </head>
+
+    <body data-ng-controller="DemoCtrl">
+
+
+
+        <div class="container-fluid">
+
+            <div data-ng-view></div>
+        </div>
+        <!--nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Brand</a>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav-->
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-animate.min.js"></script>
+        <script src="js/angular-route.min.js"></script>
+        <script src="js/angular-sanitize.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/moment.min.js"></script>
+        <script src="ui-comments-<%=pkg.version%>.js"></script>
+        <script src="js/directive/typeahead.js"></script>
+        <script src="js/directive/commenter.js"></script>
+        <script src="js/service/github.js"></script>
+        <script src="js/service/fedora.js"></script>
+        <script src="js/app.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    </body>
 </html>

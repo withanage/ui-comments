@@ -52,9 +52,9 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
                 var childComment = angular.extend(comment, {
                     //name: '@' + comment.name,
                     date: new Date(),
-                    title:comment.title,
-                    text:comment.text
-                    //profileUrl: 'https://github.com/' + comment.name
+                    title: comment.title,
+                    text: comment.text
+                            //profileUrl: 'https://github.com/' + comment.name
 
                 });
                 if (!$scope.comment.children) {
@@ -87,8 +87,11 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
                     angular.forEach(annos, function(value) {
                         console.log(value['http://purl.org/dc/elements/1.1/title']);
                         var tuple = {'title': value['http://purl.org/dc/elements/1.1/title'][0]['@value'],
-                         'text':  value['http://purl.org/dc/elements/1.1/description'][0]['@value'],
-                          'date':  value['http://fedora.info/definitions/v4/repository#lastModified'][0]['@value'],
+                            'text': value['http://purl.org/dc/elements/1.1/description'][0]['@value'],
+                            'date': value['http://fedora.info/definitions/v4/repository#lastModified'][0]['@value'],
+                            'name': value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value'],
+                            'profileUrl': 'http://dummyimage.com/80x40&text='+value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value']
+
                         }
                         $scope.comments.push(tuple);
                         //$scope.comments.push('name' + ': ' + value);
