@@ -82,15 +82,24 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
             var url = 'http://pers31.ub.uni-heidelberg.de:8080/fedora/rest/de/uni-heidelberg/ub/digi/diglit/lehmann1756/0001';// + template;
             fedoraService.fetch(url).then(function(data) {
                 if (data != null) {
+                    //console.log(data['data'].splice(0, 1));
+
                     var annos = data['data'].splice(1, data['data'].length - 1);
-                    console.log(annos);
                     angular.forEach(annos, function(value) {
-                        console.log(value['http://purl.org/dc/elements/1.1/title']);
+                        //console.log(value['http://purl.org/dc/elements/1.1/title']);
+                        var children = (value['http://www.w3.org/ns/ldp#contains'] ? value['http://www.w3.org/ns/ldp#contains'] : []) ;
+                        console.log(value);
+                        var mychildren =[];
+                        angular.forEach(children,function(child){
+                            mychildren.push(child);
+                        })
                         var tuple = {'title': value['http://purl.org/dc/elements/1.1/title'][0]['@value'],
                             'text': value['http://purl.org/dc/elements/1.1/description'][0]['@value'],
                             'date': value['http://fedora.info/definitions/v4/repository#lastModified'][0]['@value'],
                             'name': value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value'],
-                            'profileUrl': 'http://dummyimage.com/80x40&text=' + value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value']
+                            'profileUrl': 'http://dummyimage.com/80x40&text=' + value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value'],
+                            'child_count': children.length,
+                            'children': mychildren
 
                         }
                         $scope.comments.push(tuple);
@@ -99,7 +108,7 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
 
             });
             console.log($scope.comments);
-            
+
             //$scope.comments.push('name' + ': ' + value);
 
             //fedoraService.fetch(value + template).then(function(data) {
