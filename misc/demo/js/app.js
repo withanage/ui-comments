@@ -83,44 +83,47 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
             fedoraService.fetch(url).then(function(data) {
                 if (data != null) {
                     var annos = data['data'].splice(1, data['data'].length - 1);
-                    //console.log(annos);
+                    console.log(annos);
                     angular.forEach(annos, function(value) {
                         console.log(value['http://purl.org/dc/elements/1.1/title']);
                         var tuple = {'title': value['http://purl.org/dc/elements/1.1/title'][0]['@value'],
                             'text': value['http://purl.org/dc/elements/1.1/description'][0]['@value'],
                             'date': value['http://fedora.info/definitions/v4/repository#lastModified'][0]['@value'],
                             'name': value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value'],
-                            'profileUrl': 'http://dummyimage.com/80x40&text='+value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value']
+                            'profileUrl': 'http://dummyimage.com/80x40&text=' + value['http://fedora.info/definitions/v4/repository#createdBy'][0]['@value']
 
                         }
                         $scope.comments.push(tuple);
-                        //$scope.comments.push('name' + ': ' + value);
-
-                        //fedoraService.fetch(value + template).then(function(data) {
-                        //  if (data != null) {
-                        //  var tuple = {'title': data['data']['dc_title'], 'text': data['data']['dc_description'], 'date': data['data']['fcrepo_lastModified']}
-                        // $scope.comments.push(tuple);
-                        //}
-                        // })
-
-
                     });
-                    /**
-                     * 
-                     sort_text = 'fcrepo_created';
-                     $scope.comments.sort(function(a, b) {
-                     if (a[sort_text] < b[sort_text])
-                     return 1;
-                     if (a[sort_text] > b[sort_text])
-                     return -1;
-                     return 0;
-                     })
-                     $scope.comments = $scope.comments.sort();
-                     */
                 }
 
             });
             console.log($scope.comments);
+            
+            //$scope.comments.push('name' + ': ' + value);
+
+            //fedoraService.fetch(value + template).then(function(data) {
+            //  if (data != null) {
+            //  var tuple = {'title': data['data']['dc_title'], 'text': data['data']['dc_description'], 'date': data['data']['fcrepo_lastModified']}
+            // $scope.comments.push(tuple);
+            //}
+            // })
+
+
+
+            /**
+             * 
+             sort_text = 'fcrepo_created';
+             $scope.comments.sort(function(a, b) {
+             if (a[sort_text] < b[sort_text])
+             return 1;
+             if (a[sort_text] > b[sort_text])
+             return -1;
+             return 0;
+             })
+             $scope.comments = $scope.comments.sort();
+             */
+
 
             /**
              $scope.comments = [
@@ -154,7 +157,7 @@ angular.module('commentsDemo', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.commen
                 var parentComment = angular.extend(comment, {
                     name: '@' + comment.name,
                     date: new Date(),
-                    //profileUrl: 'https://github.com/' + comment.name
+                    profileUrl: 'http://dummyimage.com/80x40&text=' + 'Annotator'
                 });
                 $scope.comments.push(parentComment);
             };
